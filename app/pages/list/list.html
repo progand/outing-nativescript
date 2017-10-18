@@ -1,0 +1,23 @@
+<GridLayout rows="auto, *">
+
+    <GridLayout row="0" columns="*, auto" class="add-bar">
+        <Label text="All Trips" col="0"></Label>
+        <Button [text]="isLoading ? 'wait...' : 'refresh'" [disabled]="isLoading"col="1" (tap)="refresh()"></Button>
+    </GridLayout>
+
+    <ListView [items]="tripList" row="1" class="small-spacing" [class.visible]="listLoaded">
+        <ng-template let-item="item">
+            <StackLayout>
+                <Label [text]="item.name" class="title"></Label>
+                <GridLayout row="0" columns="*, auto" class="muted">
+                    <Label [text]="item.destination[0]" col="0" class="destination"></Label>
+                    <Label [text]="item.approvedTravellersCount + '/' + item.partnersReqd" col="1"></Label>
+                </GridLayout>
+            </StackLayout>
+        </ng-template>
+    </ListView>
+
+    <ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center"
+        verticalAlignment="center"></ActivityIndicator>
+
+</GridLayout>

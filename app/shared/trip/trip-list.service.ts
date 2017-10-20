@@ -23,6 +23,7 @@ export class TripListService {
                         trip.approvedTravellersCount,
                         trip.partnersReqd,
                         trip.coverPhoto,
+                        trip.organiser,
                         new Date(trip.dateStart),
                         new Date(trip.dateEnd),
                     ));

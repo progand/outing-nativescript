@@ -5,6 +5,7 @@ export class Trip {
         public approvedTravellersCount: number,
         public partnersReqd: number,
         public coverPhoto: Object,
+        public organiser: Object,
         public dateStart: Date,
         public dateEnd: Date) { }
 }

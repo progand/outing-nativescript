@@ -6,6 +6,7 @@
                 <AbsoluteLayout>
                     <Image [src]="getPhoto(item.coverPhoto)" class="trip-image" left="0" top="0"></Image>
                     <Label [text]="dateInterval(item)" class="date" left="0" top="3"></Label>
+                    <Label text="" [style]="'background-image:url(' + getPhoto(item.organiser.photo) + ')'" class="user-tn" left="8" top="205"></Label>                   
                 </AbsoluteLayout>
                 <Label [text]="item.name" class="title"></Label>
                 <GridLayout row="0" columns="*, auto" class="muted">

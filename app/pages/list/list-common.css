@@ -40,16 +40,25 @@ TextField {
   margin-bottom: 40;
 }
 
-.trip-image {
-  margin-bottom: 8px;
-  width: 100%;
-}
-
 .date {
   background-color: rgba(0, 0, 0, 0.5);
   color: #FFF;
   font-size: 20;
   padding: 7 8;
+}
+
+.trip-image {
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.user-tn{
+  width: 60;
+  height: 60;
+  background-repeat: no-repeat;
+  background-color: rgb(67, 132, 170);
+  border-radius: 35;
+  border: solid 2px #000;
 }
 
 .title {

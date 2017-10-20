@@ -4,5 +4,7 @@ export class Trip {
         public destination: Array<String>,
         public approvedTravellersCount: number,
         public partnersReqd: number,
-        public coverPhoto: Object) { }
+        public coverPhoto: Object,
+        public dateStart: Date,
+        public dateEnd: Date) { }
 }

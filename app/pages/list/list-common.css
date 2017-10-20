@@ -1,40 +1,58 @@
 ListView {
   opacity: 0;
 }
+
 .visible {
   animation-name: show;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
+
 @keyframes show {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-.add-bar {  
-  padding: 5 10;  
+
+.add-bar {
+  padding: 5 10;
 }
-Label{
+
+Label {
   padding: 10 0;
 }
+
 .add-bar Image {
   height: 15;
   vertical-align: center;
   margin-left: 10;
   margin-right: 5;
 }
+
 TextField {
   color: white;
 }
 
-.component-trip-card{
+.component-trip-card {
   margin-bottom: 40;
 }
 
-.trip-image{
+.trip-image {
   margin-bottom: 8px;
+  width: 100%;
 }
 
-.title{
+.date {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #FFF;
+  font-size: 20;
+  padding: 7 8;
+}
+
+.title {
   color: #4b4b4b;
   margin: 0 10;
   font-weight: bold;
@@ -42,15 +60,15 @@ TextField {
   line-height: 1.1;
 }
 
-.muted{
+.muted {
   margin: 0 10 40;
   color: #565656;
 }
 
-.destination{
+.destination {
   font-size: 13;
 }
 
-.seats{
+.seats {
   font-size: 18px;
 }

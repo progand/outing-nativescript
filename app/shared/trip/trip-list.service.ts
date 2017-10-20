@@ -17,7 +17,15 @@ export class TripListService {
                 let list = [];
                 const trips = this.deserialize(data);
                 trips.forEach((trip) => {
-                    list.push(new Trip(trip.id, trip.name, trip.destination, trip.approvedTravellersCount, trip.partnersReqd, trip.coverPhoto));
+                    list.push(new Trip(trip.id,
+                        trip.name,
+                        trip.destination,
+                        trip.approvedTravellersCount,
+                        trip.partnersReqd,
+                        trip.coverPhoto,
+                        new Date(trip.dateStart),
+                        new Date(trip.dateEnd),
+                    ));
                 });
                 return list;
             })

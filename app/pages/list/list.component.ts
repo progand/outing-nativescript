@@ -32,7 +32,14 @@ export class ListComponent implements OnInit {
       });
   }
 
-  getPhoto(photo: any, size="default"){
+  getPhoto(photo: any, size = "default") {
     return photo.sizes && photo.sizes[size] || photo.url;
+  }
+
+  dateInterval(trip: any) {
+    const start = new Date(trip.dateStart);
+    const end = new Date(trip.dateEnd);
+
+    return `${start.toDateString()} - ${end.toDateString()}`;
   }
 }

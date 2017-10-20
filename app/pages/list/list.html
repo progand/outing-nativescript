@@ -1,14 +1,12 @@
 <GridLayout rows="auto, *">
 
-    <GridLayout row="0" columns="*, auto" class="add-bar">
-        <Label text="All Trips" col="0"></Label>
-        <Button [text]="isLoading ? 'wait...' : 'refresh'" [disabled]="isLoading"col="1" (tap)="refresh()"></Button>
-    </GridLayout>
-
     <ListView [items]="tripList" row="1" [class.visible]="listLoaded">
         <ng-template let-item="item">
             <StackLayout class="component-trip-card">
-                <Image [src]="getPhoto(item.coverPhoto)" class="trip-image"></Image>
+                <AbsoluteLayout>
+                    <Image [src]="getPhoto(item.coverPhoto)" class="trip-image" left="0" top="0"></Image>
+                    <Label [text]="dateInterval(item)" class="date" left="0" top="3"></Label>
+                </AbsoluteLayout>
                 <Label [text]="item.name" class="title"></Label>
                 <GridLayout row="0" columns="*, auto" class="muted">
                     <Label [text]="item.destination[0]" col="0" class="destination"></Label>

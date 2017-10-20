@@ -15,8 +15,9 @@ export class TripListService {
             .map(res => res.json())
             .map(data => {
                 let list = [];
-                data.trips.forEach((trip) => {
-                    list.push(new Trip(trip.id, trip.name, trip.destination, trip.approvedTravellersCount, trip.partnersReqd));
+                const trips = this.deserialize(data);
+                trips.forEach((trip) => {
+                    list.push(new Trip(trip.id, trip.name, trip.destination, trip.approvedTravellersCount, trip.partnersReqd, trip.coverPhoto));
                 });
                 return list;
             })
@@ -26,5 +27,28 @@ export class TripListService {
     handleErrors(error: Response) {
         console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
+    }
+
+    deserialize(data: any) {
+        const { trips, photos, users } = data;
+        const result = trips.map(item => {
+            const organiserData = this.getByValue(users, item.organiser);
+            const organiser = Object.assign({}, organiserData, {
+                photo: this.getByValue(photos, organiserData.photo),
+                photos: organiserData.photos.map(photoId => this.getByValue(photos, photoId))
+            });
+            const trip = Object.assign({}, item, {
+                coverPhoto: this.getByValue(photos, item.coverPhoto),
+                photos: item.photos.map(photoId => this.getByValue(photos, photoId)),
+                organiser
+            });
+            return trip;
+        });
+
+        return result;
+    }
+
+    getByValue(collection, fieldValue, fieldName = 'id') {
+        return collection.find(item => item[fieldName] === fieldValue);
     }
 }

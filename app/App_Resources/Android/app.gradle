@@ -8,7 +8,7 @@
 android {  
   defaultConfig {  
     generatedDensities = []
-    applicationId = "org.nativescript.Groceries" 
+    applicationId = "cn.outingtravel.NativeScript" 
     
     //override supported platforms
     // ndk {

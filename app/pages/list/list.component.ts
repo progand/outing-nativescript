@@ -31,4 +31,8 @@ export class ListComponent implements OnInit {
         this.listLoaded = true;
       });
   }
+
+  getPhoto(photo: any, size="default"){
+    return photo.sizes && photo.sizes[size] || photo.url;
+  }
 }

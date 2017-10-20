@@ -5,13 +5,14 @@
         <Button [text]="isLoading ? 'wait...' : 'refresh'" [disabled]="isLoading"col="1" (tap)="refresh()"></Button>
     </GridLayout>
 
-    <ListView [items]="tripList" row="1" class="small-spacing" [class.visible]="listLoaded">
+    <ListView [items]="tripList" row="1" [class.visible]="listLoaded">
         <ng-template let-item="item">
-            <StackLayout>
+            <StackLayout class="component-trip-card">
+                <Image [src]="getPhoto(item.coverPhoto)" class="trip-image"></Image>
                 <Label [text]="item.name" class="title"></Label>
                 <GridLayout row="0" columns="*, auto" class="muted">
                     <Label [text]="item.destination[0]" col="0" class="destination"></Label>
-                    <Label [text]="item.approvedTravellersCount + '/' + item.partnersReqd" col="1"></Label>
+                    <Label [text]="item.approvedTravellersCount + '/' + item.partnersReqd" col="1" class="seats"></Label>
                 </GridLayout>
             </StackLayout>
         </ng-template>

@@ -26,16 +26,31 @@ TextField {
   color: white;
 }
 
+.component-trip-card{
+  margin-bottom: 40;
+}
+
+.trip-image{
+  margin-bottom: 8px;
+}
+
 .title{
   color: #4b4b4b;
   margin: 0 10;
+  font-weight: bold;
+  font-size: 18;
+  line-height: 1.1;
 }
 
 .muted{
-  margin: 0 10;
+  margin: 0 10 40;
   color: #565656;
 }
 
 .destination{
   font-size: 13;
+}
+
+.seats{
+  font-size: 18px;
 }

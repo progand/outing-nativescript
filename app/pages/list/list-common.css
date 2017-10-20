@@ -55,10 +55,10 @@ TextField {
 .user-tn{
   width: 60;
   height: 60;
-  background-repeat: no-repeat;
-  background-color: rgb(67, 132, 170);
   border-radius: 35;
-  border: solid 2px #000;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #000;
 }
 
 .title {

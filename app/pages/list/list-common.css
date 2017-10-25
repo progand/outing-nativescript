@@ -2,6 +2,10 @@ ListView {
   opacity: 0;
 }
 
+PullToRefresh{
+  height: 100%;
+}
+
 .visible {
   animation-name: show;
   animation-duration: 1s;

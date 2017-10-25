@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Trip } from "../../shared/trip/trip";
 import { TripListService } from "../../shared/trip/trip-list.service";
 import { setTimeout } from "timer";
+import {screen} from "tns-core-modules/platform";
 
 @Component({
   selector: "list",
@@ -13,6 +14,8 @@ export class ListComponent implements OnInit {
   tripList: Array<Object> = [];
   isLoading = false;
   listLoaded = false;
+  imageHeight = 234*screen.mainScreen.widthDIPs/360;
+  imageStyle = `height: ${234*screen.mainScreen.widthDIPs/360}`;
 
   constructor(private tripService: TripListService) { }
 

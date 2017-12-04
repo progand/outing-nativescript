@@ -2,10 +2,9 @@ import { screen } from "tns-core-modules/platform";
 import { Page } from "ui/page";
 import { ScrollEventData } from "ui/scroll-view";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { Trip } from "../../shared/trip/trip";
 import { TripListService } from "../../shared/trip/trip-list.service";
-import { registerElement } from "nativescript-angular/element-registry";
-registerElement("PullToRefresh1", () => require("nativescript-pulltorefresh").PullToRefresh);
 
 @Component({
   selector: "list",
@@ -15,26 +14,28 @@ registerElement("PullToRefresh1", () => require("nativescript-pulltorefresh").Pu
 })
 export class TripComponent implements OnInit {
   @ViewChild("container") container: ElementRef;
+  tripId: String;
   trip: Trip;
   maxItems = 6;
   isLoading = false;
   isLoaded = false;
 
-  constructor(private tripService: TripListService, private page: Page) {
+  constructor(private tripService: TripListService, private page: Page, private route: ActivatedRoute, ) {
     this.page.actionBar.title = "OutingTravel - item";
+    this.tripId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
     this.refresh();
   }
 
-  refresh(silent = false) {
+  refresh() {console.log(this.tripId)
     this.isLoading = true;
-    this.tripService.loadOne('8885f501-ec58-4b0f-a755-0be26ca40af8')
+    this.tripService.loadOne(this.tripId)
       .subscribe(loadedTrip => {
         this.trip = loadedTrip;
         this.isLoading = false;
-        this.isLoaded = true;console.dir(this.trip)
+        this.isLoaded = true; console.dir(this.trip)
       });
   }
 

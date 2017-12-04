@@ -1,7 +1,7 @@
 <GridLayout rows="auto, *">
 
   <PullToRefresh (refresh)="refreshList($event)" row="1">
-    <ListView [items]="visibleTrips" [class.visible]="listLoaded" (loadMoreItems)="showMore()">
+    <ListView [items]="visibleTrips" [class.visible]="listLoaded" (loadMoreItems)="showMore()" (itemTap)="openTrip($event)">
       <ng-template let-item="item">
         <StackLayout class="component-trip-card">
           <AbsoluteLayout>
@@ -14,7 +14,6 @@
             <Label [text]="item.destination[0]" col="0" class="destination"></Label>
             <Label [text]="item.approvedTravellersCount + '/' + item.partnersReqd" col="1" class="seats"></Label>
           </GridLayout>
-          <Button tap="showMore" text="Show more"></Button>
         </StackLayout>        
       </ng-template>
     </ListView>

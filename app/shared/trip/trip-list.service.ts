@@ -33,6 +33,13 @@ export class TripListService {
             .catch(this.handleErrors);
     }
 
+    loadOne(id: String) {
+        return this.http.get(Config.apiUrl + "/models/trips/" + id)
+            .map(res => res.json())
+            .map(data => data.trip)
+            .catch(this.handleErrors);
+    }
+
     handleErrors(error: Response) {
         console.log(JSON.stringify(error.json()));
         return Observable.throw(error);

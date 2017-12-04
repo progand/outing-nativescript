@@ -2,6 +2,7 @@ import { screen } from "tns-core-modules/platform";
 import { Page } from "ui/page";
 import { ScrollEventData } from "ui/scroll-view";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { Trip } from "../../shared/trip/trip";
 import { TripListService } from "../../shared/trip/trip-list.service";
 import { registerElement } from "nativescript-angular/element-registry";
@@ -15,15 +16,15 @@ registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").Pul
 })
 export class ListComponent implements OnInit {
   @ViewChild("container") container: ElementRef;
-  allTrips: Array<Object> = [];
-  visibleTrips: Array<Object> = [];
+  allTrips: Array<Trip> = [];
+  visibleTrips: Array<Trip> = [];
   maxItems = 6;
   isLoading = false;
   listLoaded = false;
   imageHeight = 234 * screen.mainScreen.widthDIPs / 360;
   imageStyle = `height: ${234 * screen.mainScreen.widthDIPs / 360}`;
 
-  constructor(private tripService: TripListService, private page: Page) {
+  constructor(private tripService: TripListService, private page: Page, private router: Router) {
     this.page.actionBar.title = "OutingTravel";
   }
 
@@ -51,10 +52,14 @@ export class ListComponent implements OnInit {
     this.visibleTrips = this.allTrips.slice(0, this.maxItems);
   }
 
+  openTrip(args){
+    const {id} = this.visibleTrips[args.index];
+    const route = `/trips/${id}`;
+    this.router.navigate([route]);
+  }
+
   getPhoto(photo: any, size = "default") {
     const url = photo.sizes && photo.sizes[size] || photo.url;
-    //console.dir(photo);
-    //console.log(size, url);
     return url;
   }
 

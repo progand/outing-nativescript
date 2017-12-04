@@ -15,7 +15,9 @@ registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").Pul
 })
 export class ListComponent implements OnInit {
   @ViewChild("container") container: ElementRef;
-  tripList: Array<Object> = [];
+  allTrips: Array<Object> = [];
+  visibleTrips: Array<Object> = [];
+  maxItems = 6;
   isLoading = false;
   listLoaded = false;
   imageHeight = 234 * screen.mainScreen.widthDIPs / 360;
@@ -33,16 +35,27 @@ export class ListComponent implements OnInit {
     this.isLoading = true;
     this.tripService.load()
       .subscribe(loadedTrips => {
-        loadedTrips.forEach((tripObject) => {
-          this.tripList.push(tripObject);
+        loadedTrips
+        .filter(tripObject => tripObject.coverPhoto.sizes && tripObject.coverPhoto.sizes.default)
+        .forEach((tripObject) => {
+          this.allTrips.push(tripObject);
         });
+        this.visibleTrips = this.allTrips.slice(0, this.maxItems);
         this.isLoading = false;
         this.listLoaded = true;
       });
   }
 
+  showMore(){
+    this.maxItems += 6;
+    this.visibleTrips = this.allTrips.slice(0, this.maxItems);
+  }
+
   getPhoto(photo: any, size = "default") {
-    return photo.sizes && photo.sizes[size] || photo.url;
+    const url = photo.sizes && photo.sizes[size] || photo.url;
+    //console.dir(photo);
+    //console.log(size, url);
+    return url;
   }
 
   dateInterval(trip: any) {
@@ -53,12 +66,12 @@ export class ListComponent implements OnInit {
   }
 
   refreshList(args) {
-    var pullRefresh = args.object;
+    let pullRefresh = args.object;
     this.tripService.load()
       .subscribe(loadedTrips => {
-        this.tripList = [];
+        this.allTrips = [];
         loadedTrips.forEach((tripObject) => {          
-          this.tripList.push(tripObject);
+          this.allTrips.push(tripObject);
         });
         pullRefresh.refreshing = false;
       });

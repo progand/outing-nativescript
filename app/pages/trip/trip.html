@@ -3,11 +3,13 @@
   <PullToRefresh *ngIf="isLoaded" (refresh)="refreshTrip($event)" row="1">
     <TabView selectedIndex="0" iosIconRenderingMode="alwaysOriginal">
       <StackLayout *tabItem="{title: 'General'}">
-        <ImageSwipe [items]="images" imageUrlProperty="url" [height]="imageHeight"></ImageSwipe>
-        <Label [text]="dateInterval(trip)" class="title"></Label>
-        <Label [text]="trip.name" class="title"></Label>
-        <Label [text]="trip.destination.join()" class="destination"></Label>
-        <Label [text]="trip.approvedTravellersCount + '/' + trip.partnersReqd" class="seats"></Label>
+        <ImageSwipe *ngIf="trip.photos.length" [items]="images" imageUrlProperty="url" [height]="imageHeight"></ImageSwipe>
+        <Label [text]="trip.name"></Label>
+        <Label [text]="dateInterval(trip)" class="muted"></Label>
+        <Label [text]="trip.destination.join(' * ')"></Label>
+        <Label [text]="partners(trip)" class="muted"></Label>
+        <Label [text]="budget(trip)"></Label>
+        <Label [text]="tags(trip)" class="blue"></Label>
       </StackLayout>
       <StackLayout *tabItem="{title: 'Travellers'}"></StackLayout>
     </TabView>

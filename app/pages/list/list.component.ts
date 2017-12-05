@@ -19,13 +19,12 @@ export class ListComponent implements OnInit {
   maxItems = 6;
   isLoading = false;
   listLoaded = false;
-  imageHeight = 234 * screen.mainScreen.widthDIPs / 360;
-  imageStyle = `height: ${234 * screen.mainScreen.widthDIPs / 360}`;
+  imageHeight = 219 * screen.mainScreen.widthDIPs / 350;
 
   constructor(private tripService: TripListService, private page: Page, private router: Router) {
     this.page.actionBar.title = "OutingTravel";
     // ToDo: remove line below
-    this.router.navigate(['/trips/36980f2d-f95d-4ea3-8f65-d40f62487d68']);
+    this.router.navigate(['/trips/effaef20-ec00-485a-9210-109ab18ab15c']);
   }
 
   ngOnInit() {  

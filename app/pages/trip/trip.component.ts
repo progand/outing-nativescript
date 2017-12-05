@@ -44,6 +44,15 @@ export class TripComponent implements OnInit {
       });
   }
 
+  refreshTrip(args) {
+    let pullRefresh = args.object;
+    this.tripService.loadOne('8885f501-ec58-4b0f-a755-0be26ca40af8')
+      .subscribe(loadedTrip => {
+        this.updateData(loadedTrip);
+        pullRefresh.refreshing = false;
+      });
+  }
+
   updateData(trip: Trip){
     this.trip = trip;
     this.page.actionBar.title = this.trip.name;
@@ -62,12 +71,15 @@ export class TripComponent implements OnInit {
     return `${start.toDateString()} - ${end.toDateString()}`;
   }
 
-  refreshTrip(args) {
-    let pullRefresh = args.object;
-    this.tripService.loadOne('8885f501-ec58-4b0f-a755-0be26ca40af8')
-      .subscribe(loadedTrip => {
-        this.updateData(loadedTrip);
-        pullRefresh.refreshing = false;
-      });
+  partners(trip: Trip){
+    return `${trip.approvedTravellersCount}/${trip.partnersReqd} Adventurers`
+  }
+
+  tags(trip: Trip){
+    return trip.tags.join(' ');
+  }
+
+  budget(trip: Trip){
+    return `$${trip.budgetFrom} - ${trip.budgetTo}`
   }
 }

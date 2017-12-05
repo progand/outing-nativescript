@@ -20,6 +20,8 @@ export class TripListService {
                     list.push(new Trip(trip.id,
                         trip.name,
                         trip.destination,
+                        trip.budgetFrom,
+                        trip.budgetTo,
                         trip.approvedTravellersCount,
                         trip.partnersReqd,
                         trip.coverPhoto,
@@ -27,6 +29,7 @@ export class TripListService {
                         new Date(trip.dateStart),
                         new Date(trip.dateEnd),
                         [],
+                        []
                     ));
                 });
                 return list;

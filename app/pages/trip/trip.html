@@ -1,17 +1,25 @@
 <GridLayout rows="auto, *">
 
   <PullToRefresh *ngIf="isLoaded" (refresh)="refreshTrip($event)" row="1">
-    <TabView selectedIndex="0" iosIconRenderingMode="alwaysOriginal">
+    <TabView selectedIndex="1" iosIconRenderingMode="alwaysOriginal">
       <StackLayout *tabItem="{title: 'General'}">
         <ImageSwipe *ngIf="trip.photos.length" [items]="images" imageUrlProperty="url" [height]="imageHeight"></ImageSwipe>
         <Label [text]="trip.name"></Label>
         <Label [text]="dateInterval(trip)" class="muted"></Label>
-        <Label [text]="trip.destination.join(' * ')"></Label>
-        <Label [text]="partners(trip)" class="muted"></Label>
+        <WrapLayout orientation="horizontal" class="destinations">
+          <Label *ngFor="let dest of trip.destination; let i = index" [text]="dest"></Label>
+        </WrapLayout>
+        <Label [text]="partnersCount(trip)" class="muted"></Label>
         <Label [text]="budget(trip)"></Label>
         <Label [text]="tags(trip)" class="blue"></Label>
       </StackLayout>
-      <StackLayout *tabItem="{title: 'Travellers'}"></StackLayout>
+      <StackLayout *tabItem="{title: 'Travellers'}">
+        <ListView [items]="trip.travellers">
+          <ng-template let-item="item">
+            <Label [text]="item.user.name"></Label>
+          </ng-template>
+        </ListView>
+      </StackLayout>
     </TabView>
   </PullToRefresh>
 

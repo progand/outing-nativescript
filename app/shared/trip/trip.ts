@@ -11,5 +11,6 @@ export class Trip {
         public dateStart: Date,
         public dateEnd: Date,
         public photos: Array<Object>,
-        public tags: Array<String>) { }
+        public tags: Array<String>,
+        public travellers: Array<Object>) { }
 }

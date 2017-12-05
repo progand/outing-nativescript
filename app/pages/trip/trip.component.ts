@@ -71,7 +71,7 @@ export class TripComponent implements OnInit {
     return `${start.toDateString()} - ${end.toDateString()}`;
   }
 
-  partners(trip: Trip){
+  partnersCount(trip: Trip){
     return `${trip.approvedTravellersCount}/${trip.partnersReqd} Adventurers`
   }
 

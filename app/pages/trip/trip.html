@@ -1,13 +1,16 @@
 <GridLayout rows="auto, *">
 
-  <PullToRefresh *ngIf="isLoaded" (refresh)="refreshTrip($event)" row="1" >
-    <StackLayout orientation="vertical">
-      <Label text="Trip details" class="title"></Label>
-      <Label [text]="dateInterval(trip)"></Label>
-      <Label [text]="trip.name" class="title"></Label>
-      <Label [text]="trip.destination.join()" class="destination"></Label>
-      <Label [text]="trip.approvedTravellersCount + '/' + trip.partnersReqd" class="seats"></Label>
-    </StackLayout>
+  <PullToRefresh *ngIf="isLoaded" (refresh)="refreshTrip($event)" row="1">
+    <TabView selectedIndex="0" iosIconRenderingMode="alwaysOriginal">
+      <StackLayout *tabItem="{title: 'General'}">
+        <ImageSwipe [items]="images" imageUrlProperty="url" [height]="imageHeight"></ImageSwipe>
+        <Label [text]="dateInterval(trip)" class="title"></Label>
+        <Label [text]="trip.name" class="title"></Label>
+        <Label [text]="trip.destination.join()" class="destination"></Label>
+        <Label [text]="trip.approvedTravellersCount + '/' + trip.partnersReqd" class="seats"></Label>
+      </StackLayout>
+      <StackLayout *tabItem="{title: 'Travellers'}"></StackLayout>
+    </TabView>
   </PullToRefresh>
 
   <ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center"

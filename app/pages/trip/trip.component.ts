@@ -3,6 +3,8 @@ import { Page } from "ui/page";
 import { ScrollEventData } from "ui/scroll-view";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
+import { registerElement } from "nativescript-angular/element-registry";
+registerElement("ImageSwipe", () => require("nativescript-image-swipe/image-swipe").ImageSwipe);
 import { Trip } from "../../shared/trip/trip";
 import { TripListService } from "../../shared/trip/trip-list.service";
 
@@ -16,12 +18,15 @@ export class TripComponent implements OnInit {
   @ViewChild("container") container: ElementRef;
   tripId: String;
   trip: Trip;
+  images: Array<Object>;
   maxItems = 6;
+  imageHeight = 234 * screen.mainScreen.widthDIPs / 360;
+  imageStyle = `height: ${234 * screen.mainScreen.widthDIPs / 360}`;
+  
   isLoading = false;
   isLoaded = false;
 
-  constructor(private tripService: TripListService, private page: Page, private route: ActivatedRoute, ) {
-    this.page.actionBar.title = "OutingTravel - item";
+  constructor(private tripService: TripListService, private page: Page, private route: ActivatedRoute, ) {    
     this.tripId = this.route.snapshot.paramMap.get('id');
   }
 
@@ -29,14 +34,20 @@ export class TripComponent implements OnInit {
     this.refresh();
   }
 
-  refresh() {console.log(this.tripId)
+  refresh() {
     this.isLoading = true;
     this.tripService.loadOne(this.tripId)
       .subscribe(loadedTrip => {
-        this.trip = loadedTrip;
+        this.updateData(loadedTrip);
         this.isLoading = false;
-        this.isLoaded = true; console.dir(this.trip)
+        this.isLoaded = true;
       });
+  }
+
+  updateData(trip: Trip){
+    this.trip = trip;
+    this.page.actionBar.title = this.trip.name;
+    this.images = this.trip.photos.map(photo => ({url: this.getPhoto(photo)}));
   }
 
   getPhoto(photo: any, size = "default") {
@@ -55,7 +66,7 @@ export class TripComponent implements OnInit {
     let pullRefresh = args.object;
     this.tripService.loadOne('8885f501-ec58-4b0f-a755-0be26ca40af8')
       .subscribe(loadedTrip => {
-        this.trip = loadedTrip;
+        this.updateData(loadedTrip);
         pullRefresh.refreshing = false;
       });
   }

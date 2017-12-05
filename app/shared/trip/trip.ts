@@ -7,5 +7,6 @@ export class Trip {
         public coverPhoto: Object,
         public organiser: Object,
         public dateStart: Date,
-        public dateEnd: Date) { }
+        public dateEnd: Date,
+        public photos:  Array<Object>,) { }
 }

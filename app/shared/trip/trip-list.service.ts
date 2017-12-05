@@ -26,6 +26,7 @@ export class TripListService {
                         trip.organiser,
                         new Date(trip.dateStart),
                         new Date(trip.dateEnd),
+                        [],
                     ));
                 });
                 return list;
@@ -34,10 +35,21 @@ export class TripListService {
     }
 
     loadOne(id: String) {
-        return this.http.get(Config.apiUrl + "/models/trips/" + id)
-            .map(res => res.json())
-            .map(data => data.trip)
-            .catch(this.handleErrors);
+        const promise = this.http.get(Config.apiUrl + "/models/trips/" + id)
+            .toPromise()
+            .then(res => res.json())
+            .then(data => Promise.all([
+                data.trip,
+                this.http.get(Config.apiUrl + "/models/photos/?ids[]=" + data.trip.photos.join("&ids[]="))
+                    .toPromise()
+                    .then(res => res.json())
+                    .then(data => data.photos)
+            ]))
+            .then(([trip, photos]) => Object.assign({}, trip, {
+                coverPhoto: this.getByValue(photos, trip.coverPhoto),
+                photos: trip.photos.map(photoId => this.getByValue(photos, photoId))
+            }));
+        return Observable.fromPromise(promise);
     }
 
     handleErrors(error: Response) {

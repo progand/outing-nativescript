@@ -20,6 +20,9 @@ export class TripListService {
                     list.push(new Trip(trip.id,
                         trip.name,
                         trip.destination,
+                        null,
+                        null,
+                        null,
                         trip.budgetFrom,
                         trip.budgetTo,
                         trip.approvedTravellersCount,
@@ -28,9 +31,9 @@ export class TripListService {
                         trip.organiser,
                         new Date(trip.dateStart),
                         new Date(trip.dateEnd),
-                        [],
-                        [],
-                        []
+                        null,
+                        null,
+                        null,
                     ));
                 });
                 return list;
@@ -45,18 +48,13 @@ export class TripListService {
             .then(data => data.trip)
             .then(trip => Promise.all([
                 trip,
-                this.http.get(Config.apiUrl + "/models/photos/?ids[]=" + trip.photos.join("&ids[]="))
-                    .toPromise()
-                    .then(res => res.json())
-                    .then(data => data.photos),
                 this.http.get(Config.apiUrl + "/models/travellers/?ids[]=" + trip.travellers.join("&ids[]="))
                     .toPromise()
                     .then(res => res.json())
                     .then(data => data.travellers)
             ]))
-            .then(([trip, photos, travellers]) => Promise.all([
+            .then(([trip, travellers]) => Promise.all([
                 trip,
-                photos,
                 travellers,
                 this.http.get(Config.apiUrl + "/models/users/?ids[]=" + travellers
                     .reduce((result, travellerData) => result.concat([travellerData.user]), [])
@@ -65,15 +63,34 @@ export class TripListService {
                     .then(res => res.json())
                     .then(data => data.users)
             ]))
-            .then(([trip, photos, travellers, users]) => Object.assign({}, trip, {
+            .then(([trip, travellers, users]) => Promise.all([
+                trip,
+                travellers,
+                users,
+                this.http.get(Config.apiUrl + "/models/photos/?ids[]=" + trip.photos
+                    .concat(travellers.reduce((result, traveller) => {
+                        const user = this.getByValue(users, traveller.user);
+                        return result.concat([user.photo]);
+                    }, []))
+                    .join("&ids[]="))
+                    .toPromise()
+                    .then(res => res.json())
+                    .then(data => data.photos)
+            ]))
+            .then(([trip, travellers, users, photos]) => Object.assign({}, trip, {
                 coverPhoto: this.getByValue(photos, trip.coverPhoto),
                 photos: trip.photos.map(photoId => this.getByValue(photos, photoId)),
                 travellers: trip.travellers
                     .map(travellerId => this.getByValue(travellers, travellerId))
                     .map(traveller => {
-                        console.dir(traveller);
-                        console.log(users.length);
-                        return Object.assign({}, traveller, { user: this.getByValue(users, traveller.user) });
+                        const user = this.getByValue(users, traveller.user);
+                        //console.dir(user);
+                        //console.dir(photos)
+                        return Object.assign({}, traveller, {
+                            user: Object.assign({}, user, {
+                                photo: this.getByValue(photos, user.photo)
+                            })
+                        })
                     })
             }));
         return Observable.fromPromise(promise);

@@ -24,7 +24,7 @@ export class ListComponent implements OnInit {
   constructor(private tripService: TripListService, private page: Page, private router: Router) {
     this.page.actionBar.title = "OutingTravel";
     // ToDo: remove line below
-    this.router.navigate(['/trips/effaef20-ec00-485a-9210-109ab18ab15c']);
+    this.router.navigate(['/trips/239487a1-c482-4b2d-b227-04fe6dde539f']);
   }
 
   ngOnInit() {  

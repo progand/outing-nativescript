@@ -46,7 +46,7 @@ export class TripComponent implements OnInit {
 
   refreshTrip(args) {
     let pullRefresh = args.object;
-    this.tripService.loadOne('8885f501-ec58-4b0f-a755-0be26ca40af8')
+    this.tripService.loadOne(this.tripId)
       .subscribe(loadedTrip => {
         this.updateData(loadedTrip);
         pullRefresh.refreshing = false;
@@ -80,6 +80,23 @@ export class TripComponent implements OnInit {
   }
 
   budget(trip: Trip){
-    return `$${trip.budgetFrom} - ${trip.budgetTo}`
+    return `¥${trip.budgetFrom} - ${trip.budgetTo}`
+  }
+
+  travellerInfo(traveller: any){
+    if(traveller.coorganizer){
+      return 'Organiser!';
+    } else if (traveller.approved){
+      return 'Approved';
+    }
+    return "Pending...";
+  }
+  travellerStyle(traveller: any){
+    if(traveller.coorganizer){
+      return 'color: #337ab7';
+    } else if (traveller.approved){
+      return 'color: #3c763d';
+    } 
+    return 'color: #9B9B9B';
   }
 }

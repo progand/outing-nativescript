@@ -20,8 +20,7 @@ export class TripComponent implements OnInit {
   trip: Trip;
   images: Array<Object>;
   maxItems = 6;
-  imageHeight = 234 * screen.mainScreen.widthDIPs / 360;
-  imageStyle = `height: ${234 * screen.mainScreen.widthDIPs / 360}`;
+  imageHeight = 219 * screen.mainScreen.widthDIPs / 360;
   
   isLoading = false;
   isLoaded = false;

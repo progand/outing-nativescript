@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   isLoading = false;
   listLoaded = false;
   imageHeight = 219 * screen.mainScreen.widthDIPs / 350;
+  imageStyle = `height: ${219 * screen.mainScreen.widthDIPs / 360}`;
 
   constructor(private tripService: TripListService, private page: Page, private router: Router) {
     this.page.actionBar.title = "OutingTravel";
